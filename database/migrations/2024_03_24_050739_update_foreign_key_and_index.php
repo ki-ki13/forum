@@ -22,6 +22,11 @@ return new class extends Migration
             $table->index('c_created_by');
         });
 
+        Schema::table('tbl_group', function (Blueprint $table) {
+            $table->foreign('g_created_by')->references('id')->on('tbl_users');
+            $table->index('g_created_by');
+        });
+
         // Update tbl_forum_question Foreign Key
         Schema::table('tbl_forum_question', function (Blueprint $table) {
             $table->foreign('fq_category_id')->references('id')->on('tbl_category')->onDelete('cascade');

@@ -3,23 +3,22 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class UserController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-
     /**
      *    @OA\Get(
-     *       path="/user",
-     *       tags={"User"},
-     *       operationId="index",
-     *       summary="User - Get All",
-     *       description="Mengambil Data User",
+     *       path="/category",
+     *       tags={"Category"},
+     *       operationId="category-index",
+     *       summary="Category - Get All",
+     *       description="Mengambil Data Category",
      *		security={{ "bearerAuth": {} }},
      *       @OA\Response(
      *           response="200",
@@ -27,17 +26,12 @@ class UserController extends Controller
      *           @OA\JsonContent
      *           (example={
      *               "success": true,
-     *               "message": "Berhasil mengambil Data User",
+     *               "message": "Berhasil mengambil Data Category",
      *               "data": {
      *                   {
      *						"id": "1",
-     *						"username": "admin",
-     *						"password": "admin",
-     *						"nama": "Admin",
-     *						"alamat": "Pemalang",
-     *						"no_telp": "087723977966",
-     *						"jenis_kelamin": "Perempuan",
-     *						"role": "Admin"
+     *						"c_nama": "Pemrograman Komputer",
+     *						"c_created_by": 1,
      *					}
      *              }
      *          }),
@@ -55,7 +49,7 @@ class UserController extends Controller
             if ($this->checkToken($token)) {
                 $success = true;
                 $message = 'Data berhasil diambil';
-                $data = User::all();
+                $data = Category::all();
             }
             return response()->json([
                 'message' => $message,
@@ -64,7 +58,7 @@ class UserController extends Controller
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Something went wrong in UserController.index',
+                'message' => 'Something went wrong in CategoryController.index',
                 'error' => $e->getMessage(),
                 'success' => $success
             ], 400);
@@ -76,31 +70,28 @@ class UserController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    /**
+
+     /**
      * 	@OA\Post(
-     *     	operationId="store",
-     *     	tags={"User"},
-     *     	summary="User - Insert",
-     *     	description="Post data User",
-     *     	path="/user",
+     *     	operationId="category-store",
+     *     	tags={"Category"},
+     *     	summary="Category - Insert",
+     *     	description="Post data Category",
+     *     	path="/category",
      *     	security={{"bearerAuth":{}}},
      *    	@OA\RequestBody(
      *         required=true,
      *         description="Request Body Description",
      *         @OA\JsonContent(
      *             example={
-     *						"username": "kiki",
-     *						"password": "password",
-     *						"nama": "Kiki",
-     *						"alamat": "Pemalang",
-     *						"no_telp": "08722729109",
-     *						"jenis_kelamin": "Perempuan",
-     *						"role": "user"
+     *						"c_nama": "Pemrograman Komputer",
+     *						"c_created_by": 2,
      *             },
      *         ),
      *     	),
@@ -121,13 +112,8 @@ class UserController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'username' => 'required',
-                'password' => 'required',
-                'nama' => 'required',
-                'alamat' => 'required',
-                'no_telp' => 'required',
-                'jenis_kelamin' => 'required',
-                'role' => 'required'
+                'c_nama' => 'required',
+                'c_created_by' => 'required',
             ]);
 
             //check if validation fails
@@ -144,7 +130,7 @@ class UserController extends Controller
                 $success = true;
                 $message = 'Data berhasil disimpan';
                 $token = $this->createToken();
-                $data = User::create(array_merge($request->all(), ['api_token' => $token,'token_type'=>'Bearer']));
+                $data = Category::create($request->all());
             }
             return response()->json([
                 'message' => $message,
@@ -153,7 +139,7 @@ class UserController extends Controller
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Something went wrong in UserController.store',
+                'message' => 'Something went wrong in CategoryController.store',
                 'error' => $e->getMessage(),
                 'success' => $success
             ], 400);
@@ -164,51 +150,44 @@ class UserController extends Controller
      * Display the specified resource.
      */
 
-    /**
+     /**
      *    @OA\Get(
-     *       path="/user/{user}",
-     *       tags={"User"},
-     *       operationId="show",
-     *       summary="User - Get By ID",
+     *       path="/category/{category}",
+     *       tags={"Category"},
+     *       operationId="category-show",
+     *       summary="Category - Get By ID",
      *		security={{ "bearerAuth": {} }},
      *   @OA\Parameter(
      *     @OA\Schema(
-     *       default="3",
+     *       default="1",
      *       type="string",
      *     ),
      *     description="Masukan User ID",
-     *     example="3",
+     *     example="1",
      *     in="path",
-     *     name="user",
+     *     name="category",
      *     required=true,
      *   ),
-     *       description="Mengambil Data User Berdasarkan User ID",
+     *       description="Mengambil Data Category Berdasarkan User ID",
      *       @OA\Response(
      *           response="200",
      *           description="Ok",
      *           @OA\JsonContent
      *           (example={
      *               "success": true,
-     *               "message": "Berhasil mengambil Data User",
+     *               "message": "Berhasil mengambil Data Category",
      *               "data": {
      *                   {
      *						"id": "1",
-     *						"username": "admin",
-     *						"password": "admin",
-     *						"nama": "Admin",
-     *						"alamat": "Pemalang",
-     *						"no_telp": "087723977966",
-     *						"jenis_kelamin": "Perempuan",
-     *						"role": "Admin",
-     *                       "api_token":"lalalala",
-     *                       "token_type":"Bearer"
+     *						"c_nama": "Pemrograman Komputer",
+     *						"c_created_by": 2,
      *					}
      *              }
      *          }),
      *      ),
      *  )
      */
-    public function show($user)
+    public function show($category)
     {
         try {
             $token = request()->bearerToken();
@@ -219,7 +198,7 @@ class UserController extends Controller
             if ($this->checkToken($token)) {
                 $success = true;
                 $message = 'Data berhasil diambil';
-                $data = User::where('id', $user)->first();
+                $data = Category::where('id', $category)->first();
             }
             return response()->json([
                 'message' => $message,
@@ -228,7 +207,7 @@ class UserController extends Controller
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Something went wrong in UserController.show',
+                'message' => 'Something went wrong in CategoryController.show',
                 'error' => $e->getMessage(),
                 'success' => $success
             ], 400);
@@ -246,37 +225,33 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    /**
+
+      /**
      * 	@OA\Put(
-     *     	operationId="update",
-     *     	tags={"User"},
-     *     	summary="User - Update",
+     *     	operationId="category-update",
+     *     	tags={"Category"},
+     *     	summary="Category - Update",
      *   @OA\Parameter(
      *     @OA\Schema(
      *       default="3",
      *       type="string",
      *     ),
-     *     description="Masukan User ID",
+     *     description="Masukan Category ID",
      *     example="1",
      *     in="path",
-     *     name="user",
+     *     name="category",
      *     required=true,
      *   ),
-     *     	description="Update data User",
-     *     	path="/user/{user}",
+     *     	description="Update data Category",
+     *     	path="/category/{category}",
      *     	security={{"bearerAuth":{}}},
      *    	@OA\RequestBody(
      *         required=true,
      *         description="Request Body Description",
      *         @OA\JsonContent(
      *             example={
-     *						"username": "kiki",
-     *						"nama": "Kiki",
-     *						"alamat": "Pemalang",
-     *						"no_telp": "08772383920",
-     *						"jenis_kelamin": "Perempuan",
-     *                      "group_id":3,
-     *						"role": "User"
+     *						"c_nama": "Pemrograman Komputer",
+     *						"c_created_by": 2,
      *             },
      *         ),
      *     	),
@@ -293,16 +268,12 @@ class UserController extends Controller
      *
      *
      */
-    public function update(Request $request, $user)
+    public function update(Request $request, $category)
     {
         try {
             $validator = Validator::make($request->all(), [
-                'username' => 'required',
-                'nama' => 'required',
-                'alamat' => 'required',
-                'no_telp' => 'required',
-                'jenis_kelamin' => 'required',
-                'role' => 'required'
+                'c_nama' => 'required',
+                'c_created_by' => 'required',
             ]);
 
             //check if validation fails
@@ -318,7 +289,7 @@ class UserController extends Controller
             if ($this->checkToken($token)) {
                 $success = true;
                 $message = 'Data berhasil disimpan';
-                $result = User::where('id', $user)->update($request->all());
+                $result = Category::where('id', $category)->update($request->all());
             }
             return response()->json([
                 'message' => $message,
@@ -326,7 +297,7 @@ class UserController extends Controller
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Something went wrong in UserController.update',
+                'message' => 'Something went wrong in categoryController.update',
                 'error' => $e->getMessage(),
                 'success' => $success
             ], 400);
@@ -337,24 +308,24 @@ class UserController extends Controller
      * Remove the specified resource from storage.
      */
 
-    /**
+     /**
      * 	@OA\Delete(
-     *     	operationId="destroy",
-     *     	tags={"User"},
-     *     	summary="User - Delete",
+     *     	operationId="category=destroy",
+     *     	tags={"Category"},
+     *     	summary="Category - Delete",
      *   @OA\Parameter(
      *     @OA\Schema(
      *       default="3",
      *       type="string",
      *     ),
-     *     description="Masukan User ID",
+     *     description="Masukan Category ID",
      *     example="2",
      *     in="path",
-     *     name="user",
+     *     name="category",
      *     required=true,
      *   ),
-     *     	description="Delete data User",
-     *     	path="/user/{user}",
+     *     	description="Delete data Category",
+     *     	path="/category/{category}",
      *     	security={{"bearerAuth":{}}},
      *       @OA\Response(
      *           response="200",
@@ -369,10 +340,9 @@ class UserController extends Controller
      *
      *
      */
-    public function destroy($user)
+    public function destroy($category)
     {
         try {
-
             $token = request()->bearerToken();
             $success = false;
             $message = "Authorization Failed";
@@ -382,8 +352,8 @@ class UserController extends Controller
                 $success = true;
                 $message = 'Data berhasil dihapus';
 
-                $data = User::where([
-                    ['id', '=', $user]
+                $data = Category::where([
+                    ['id', '=', $category]
                 ])->delete();
             }
             return response()->json([
@@ -392,77 +362,7 @@ class UserController extends Controller
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
-                'message' => 'Something went wrong in UserController.destroy',
-                'error' => $e->getMessage(),
-                'success' => $success
-            ], 400);
-        }
-    }
-
-     /**
-     * Update the specified resource in storage.
-     */
-    /**
-     * 	@OA\Put(
-     *     	operationId="updateGroupId",
-     *     	tags={"User"},
-     *     	summary="User - Update Group Id",
-     *     	description="Update data User",
-     *     	path="/user-group",
-     *     	security={{"bearerAuth":{}}},
-     *    	@OA\RequestBody(
-     *         required=true,
-     *         description="Request Body Description",
-     *         @OA\JsonContent(
-     *             example={
-     *						"username": "kiki",
-     *                      "group_id":3,
-     *             },
-     *         ),
-     *     	),
-     *       @OA\Response(
-     *           response="201",
-     *           description="Ok",
-     *           @OA\JsonContent
-     *           (example={
-     *				"success": true,
-     *				"message": "Data berhasil diubah"
-     *			}),
-     *      ),
-     * 	)
-     *
-     *
-     */
-    public function updateGroupId(Request $request)
-    {
-        try {
-            $validator = Validator::make($request->all(), [
-                'username' => 'required',
-            ]);
-
-            //check if validation fails
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 422);
-            }
-
-            $token = request()->bearerToken();
-            $success = false;
-            $message = "Authorization Failed";
-            $data = null;
-
-            if ($this->checkToken($token)) {
-                $success = true;
-                $message = 'Data berhasil disimpan';
-                $user= $request->username;
-                $result = User::where('username', $user)->update(['group_id' => $request->group_id]);
-            }
-            return response()->json([
-                'message' => $message,
-                'success' => $success
-            ], 200);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Something went wrong in UserController.updateGroupId',
+                'message' => 'Something went wrong in CategoryController.destroy',
                 'error' => $e->getMessage(),
                 'success' => $success
             ], 400);

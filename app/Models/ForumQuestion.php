@@ -34,4 +34,8 @@ class ForumQuestion extends Model
     {
         return $this->belongsTo(Group::class, 'fd_group_id');
     }
+    public function forum_user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'fd_created_by');
+    }
 }

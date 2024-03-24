@@ -115,6 +115,224 @@
                 ]
             }
         },
+        "/category": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Category - Get All",
+                "description": "Mengambil Data Category",
+                "operationId": "category-index",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Category",
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "c_nama": "Pemrograman Komputer",
+                                            "c_created_by": 1
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Category - Insert",
+                "description": "Post data Category",
+                "operationId": "category-store",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "c_nama": "Pemrograman Komputer",
+                                "c_created_by": 2
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil disimpan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/category/{category}": {
+            "get": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Category - Get By ID",
+                "description": "Mengambil Data Category Berdasarkan User ID",
+                "operationId": "category-show",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "Masukan User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "1"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Category",
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "c_nama": "Pemrograman Komputer",
+                                            "c_created_by": 2
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Category - Update",
+                "description": "Update data Category",
+                "operationId": "category-update",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "Masukan Category ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "c_nama": "Pemrograman Komputer",
+                                "c_created_by": 2
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil diubah"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Category"
+                ],
+                "summary": "Category - Delete",
+                "description": "Delete data Category",
+                "operationId": "category=destroy",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "Masukan Category ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil dihapus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/group": {
             "get": {
                 "tags": [

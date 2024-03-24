@@ -31,4 +31,6 @@ Route::put('user-group', [UserController::class, 'updateGroupId']);
 Route::apiResource('group', 'App\Http\Controllers\API\GroupController');
 Route::get('group/{group}/member', [GroupController::class, 'getGroupMember']);
 Route::get('group-aktif', [GroupController::class, 'getAktifGroup']);
+// Category
+Route::apiResource('category', 'App\Http\Controllers\API\CategoryController');
 
