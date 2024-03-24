@@ -25,11 +25,6 @@ class ForumQuestion extends Model
     {
         return $this->hasMany(ForumDetail::class);
     }
-
-    public function forum_category(): BelongsTo
-    {
-        return $this->belongsTo(Category::class, 'fd_category_id');
-    }
     public function forum_group(): BelongsTo
     {
         return $this->belongsTo(Group::class, 'fd_group_id');
@@ -37,5 +32,9 @@ class ForumQuestion extends Model
     public function forum_user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'fd_created_by');
+    }
+    public function category()
+    {
+        return $this->belongsToMany(Category::class, 'tbl_forum_category', 'fc_forum_id', 'fc_category_id');
     }
 }

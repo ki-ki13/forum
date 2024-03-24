@@ -29,7 +29,6 @@ return new class extends Migration
 
         // Update tbl_forum_question Foreign Key
         Schema::table('tbl_forum_question', function (Blueprint $table) {
-            $table->foreign('fq_category_id')->references('id')->on('tbl_category')->onDelete('cascade');
             $table->foreign('fq_created_by')->references('id')->on('tbl_users')->onDelete('cascade');
             $table->foreign('fq_updated_by')->references('id')->on('tbl_users');
             $table->foreign('fq_group_id')->references('id')->on('tbl_group');

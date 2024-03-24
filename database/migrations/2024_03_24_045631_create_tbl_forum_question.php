@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('fq_category_id');
             $table->text('fq_question');
-            $table->unsignedBigInteger('fq_group_id');
             $table->unsignedBigInteger('fq_created_by');
             $table->unsignedBigInteger('fq_updated_by');
             $table->timestamps();
