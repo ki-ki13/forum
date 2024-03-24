@@ -1,0 +1,761 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Dokumentasi API",
+        "description": "API Forum App",
+        "contact": {
+            "email": "rizkimahjati845@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost/forum/api",
+            "description": "API Forum App"
+        }
+    ],
+    "paths": {
+        "/auth/checkLogin": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authentication - Check Login",
+                "description": "Authentication User",
+                "operationId": "checkLogin",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "username": "admin",
+                                "password": "admin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil Login",
+                                    "data": [
+                                        {
+                                            "username": "admin",
+                                            "nama": "Admin",
+                                            "role": "Admin"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/auth/register": {
+            "post": {
+                "tags": [
+                    "Authentication"
+                ],
+                "summary": "Authentication - Register",
+                "description": "Post data Register",
+                "operationId": "register",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "username": "admin",
+                                "password": "admin",
+                                "nama": "Admin",
+                                "alamat": "Pemalang",
+                                "no_telp": "087723977966",
+                                "jenis_kelamin": "Perempuan",
+                                "role": "Admin"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil disimpan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/group": {
+            "get": {
+                "tags": [
+                    "Group"
+                ],
+                "summary": "Group - Get All",
+                "description": "Mengambil Data Group",
+                "operationId": "group-index",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Group",
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "g_nama": "test group",
+                                            "g_tipe": "public",
+                                            "g_status": "aktif"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Group"
+                ],
+                "summary": "Group - Insert",
+                "description": "Post data Group",
+                "operationId": "group-store",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "g_nama": "test group",
+                                "g_tipe": "public",
+                                "g_status": "aktif"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil disimpan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/group/{group}": {
+            "get": {
+                "tags": [
+                    "Group"
+                ],
+                "summary": "Group - Get By ID",
+                "description": "Mengambil Data Group Berdasarkan Group ID",
+                "operationId": "group-show",
+                "parameters": [
+                    {
+                        "name": "group",
+                        "in": "path",
+                        "description": "Masukan Group ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Group",
+                                    "data": [
+                                        {
+                                            "g_nama": "test group",
+                                            "g_tipe": "public",
+                                            "g_status": "aktif"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Group"
+                ],
+                "summary": "Group - Update",
+                "description": "Update data Group",
+                "operationId": "group-update",
+                "parameters": [
+                    {
+                        "name": "group",
+                        "in": "path",
+                        "description": "Masukan Group ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "1"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "g_nama": "test group",
+                                "g_tipe": "public",
+                                "g_status": "non aktif"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil diubah"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Group"
+                ],
+                "summary": "Group - Delete",
+                "description": "Delete data Group",
+                "operationId": "group-destroy",
+                "parameters": [
+                    {
+                        "name": "group",
+                        "in": "path",
+                        "description": "Masukan Group ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "2"
+                        },
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil dihapus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/group-aktif": {
+            "get": {
+                "tags": [
+                    "Group"
+                ],
+                "summary": "Group - Get Aktif Group",
+                "description": "Mengambil Data Group Aktif",
+                "operationId": "getAktifGroup",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Group",
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "g_nama": "test group",
+                                            "g_tipe": "public",
+                                            "g_status": "aktif"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/group/{group}/member": {
+            "get": {
+                "tags": [
+                    "Group"
+                ],
+                "summary": "Group - Get Member",
+                "description": "Mengambil Data Member Berdasarkan Group ID",
+                "operationId": "getGroupMember",
+                "parameters": [
+                    {
+                        "name": "group",
+                        "in": "path",
+                        "description": "Masukan Group ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Member",
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "nama": "Kiki",
+                                            "alamat": "Pemalang",
+                                            "no_telp": "087723977966",
+                                            "jenis_kelamin": "Perempuan"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/changepassword": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User - Change Password",
+                "description": "Change Password",
+                "operationId": "updatePassword",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "username": "admin",
+                                "password": "123"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Password berhasil diubah"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/user": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User - Get All",
+                "description": "Mengambil Data User",
+                "operationId": "index",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data User",
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "username": "admin",
+                                            "password": "admin",
+                                            "nama": "Admin",
+                                            "alamat": "Pemalang",
+                                            "no_telp": "087723977966",
+                                            "jenis_kelamin": "Perempuan",
+                                            "role": "Admin"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User - Insert",
+                "description": "Post data User",
+                "operationId": "store",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "username": "kiki",
+                                "password": "password",
+                                "nama": "Kiki",
+                                "alamat": "Pemalang",
+                                "no_telp": "08722729109",
+                                "jenis_kelamin": "Perempuan",
+                                "role": "user"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil disimpan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/user/{user}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User - Get By ID",
+                "description": "Mengambil Data User Berdasarkan User ID",
+                "operationId": "show",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Masukan User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data User",
+                                    "data": [
+                                        {
+                                            "id": "1",
+                                            "username": "admin",
+                                            "password": "admin",
+                                            "nama": "Admin",
+                                            "alamat": "Pemalang",
+                                            "no_telp": "087723977966",
+                                            "jenis_kelamin": "Perempuan",
+                                            "role": "Admin",
+                                            "api_token": "lalalala",
+                                            "token_type": "Bearer"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User - Update",
+                "description": "Update data User",
+                "operationId": "update",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Masukan User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "username": "kiki",
+                                "nama": "Kiki",
+                                "alamat": "Pemalang",
+                                "no_telp": "08772383920",
+                                "jenis_kelamin": "Perempuan",
+                                "group_id": 3,
+                                "role": "User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil diubah"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User - Delete",
+                "description": "Delete data User",
+                "operationId": "destroy",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Masukan User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil dihapus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/user-group": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "User - Update Group Id",
+                "description": "Update data User",
+                "operationId": "updateGroupId",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "username": "kiki",
+                                "group_id": 3
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil diubah"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Enter token",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
