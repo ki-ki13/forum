@@ -27,6 +27,7 @@ return new class extends Migration
             $table->foreign('fq_category_id')->references('id')->on('tbl_category')->onDelete('cascade');
             $table->foreign('fq_created_by')->references('id')->on('tbl_users')->onDelete('cascade');
             $table->foreign('fq_updated_by')->references('id')->on('tbl_users');
+            $table->foreign('fq_group_id')->references('id')->on('tbl_group');
             $table->index('fq_category_id');
             $table->index('fq_created_by');
             $table->index('fq_updated_by');

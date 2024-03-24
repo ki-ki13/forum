@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Group extends Model
 {
     use HasFactory;
-    protected $table='tbl_group';
+    protected $table = 'tbl_group';
     protected $fillable = [
         'id',
         'g_nama',
@@ -17,7 +17,12 @@ class Group extends Model
         'g_status'
     ];
 
-    public function user() : HasMany {
+    public function user(): HasMany
+    {
         return $this->hasMany(User::class);
+    }
+    public function forum_question(): HasMany
+    {
+        return $this->hasMany(ForumQuestion::class);
     }
 }
