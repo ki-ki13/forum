@@ -27,13 +27,17 @@ class ForumQuestion extends Model
     }
     public function forum_group(): BelongsTo
     {
-        return $this->belongsTo(Group::class, 'fd_group_id');
+        return $this->belongsTo(Group::class, 'fq_group_id');
     }
     public function forum_user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'fd_created_by');
+        return $this->belongsTo(User::class, 'fq_created_by');
     }
-    public function category()
+    public function forum_user_update(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'fq_updated_by');
+    }
+    public function categories()
     {
         return $this->belongsToMany(Category::class, 'tbl_forum_category', 'fc_forum_id', 'fc_category_id');
     }

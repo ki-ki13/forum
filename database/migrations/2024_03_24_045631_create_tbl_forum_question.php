@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('tbl_forum_question', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('fq_category_id');
             $table->text('fq_question');
             $table->unsignedBigInteger('fq_created_by');
             $table->unsignedBigInteger('fq_updated_by');

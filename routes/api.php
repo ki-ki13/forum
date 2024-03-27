@@ -1,11 +1,14 @@
 <?php
 
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\ForumDetailController;
+use App\Http\Controllers\API\ForumQuestionController;
 use App\Http\Controllers\API\GroupController;
 use App\Http\Controllers\API\PasswordChange;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
+use App\Models\ForumQuestion;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,4 +36,12 @@ Route::get('group/{group}/member', [GroupController::class, 'getGroupMember']);
 Route::get('group-aktif', [GroupController::class, 'getAktifGroup']);
 // Category
 Route::apiResource('category', 'App\Http\Controllers\API\CategoryController');
-
+// Forum Question
+Route::apiResource('forumq', 'App\Http\Controllers\API\ForumQuestionController');
+Route::get('forumq/{user}/user', [ForumQuestionController::class, 'getFQBasedUserId']);
+Route::get('forumq/{group}/group', [ForumQuestionController::class, 'getFQBasedGroupId']);
+Route::post('forumq/category', [ForumQuestionController::class, 'getFQBasedCategory']);
+// Forum Question
+Route::apiResource('forumd', 'App\Http\Controllers\API\ForumDetailController');
+Route::get('forumd/{user}/user', [ForumDetailController::class, 'getFDbasedUserId']);
+Route::get('forumd/{forumd}/forum', [ForumDetailController::class, 'getFDbasedForumId']);

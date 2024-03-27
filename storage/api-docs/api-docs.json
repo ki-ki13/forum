@@ -333,6 +333,842 @@
                 ]
             }
         },
+        "/forumd": {
+            "get": {
+                "tags": [
+                    "Forum Detail"
+                ],
+                "summary": "Forum Detail - Get All",
+                "description": "Mengambil Data Forum Detail",
+                "operationId": "forumd-index",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Forum Detail",
+                                    "data": {
+                                        "id": 1,
+                                        "fd_forum_id": 3,
+                                        "fd_detail": "test lagi coba ya?",
+                                        "fd_user_id": 3,
+                                        "created_at": "2024-03-26T10:41:00.000000Z",
+                                        "updated_at": "2024-03-26T10:42:50.000000Z",
+                                        "forum_detail_user": {
+                                            "id": 3,
+                                            "nama": "Kiki"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Forum Detail"
+                ],
+                "summary": "Forum Detail - Insert",
+                "description": "Post data Forum Detail",
+                "operationId": "forumd-store",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "fd_forum_id": 2,
+                                "fd_detail": "test lagi?",
+                                "fd_user_id": 3
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil disimpan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/forumd/{forumd}": {
+            "get": {
+                "tags": [
+                    "Forum Detail"
+                ],
+                "summary": "Forum Detail - Get By ID",
+                "description": "Mengambil Data Forum Detail Berdasarkan Forum Detail ID",
+                "operationId": "forumd-show",
+                "parameters": [
+                    {
+                        "name": "forumd",
+                        "in": "path",
+                        "description": "Masukan Forum Detail ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "1"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Forum Detail",
+                                    "data": {
+                                        "id": 1,
+                                        "fd_forum_id": 3,
+                                        "fd_detail": "test lagi coba ya?",
+                                        "fd_user_id": 3,
+                                        "created_at": "2024-03-26T10:41:00.000000Z",
+                                        "updated_at": "2024-03-26T10:42:50.000000Z",
+                                        "forum_detail_user": {
+                                            "id": 3,
+                                            "nama": "Kiki"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Forum Detail"
+                ],
+                "summary": "Forum Detail - Update",
+                "description": "Update data Forum Detail",
+                "operationId": "forumd-update",
+                "parameters": [
+                    {
+                        "name": "forumd",
+                        "in": "path",
+                        "description": "Masukan Forum Detail ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "1"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "fd_forum_id": 3,
+                                "fd_detail": "test lagi ?",
+                                "fd_user_id": 3
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil diubah"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Forum Detail"
+                ],
+                "summary": "Forum Detail - Delete",
+                "description": "Delete data Forum Detail",
+                "operationId": "forumd-destroy",
+                "parameters": [
+                    {
+                        "name": "forumd",
+                        "in": "path",
+                        "description": "Masukan Forum Detail ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "2"
+                        },
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil dihapus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/forumd/{forumd}/forum": {
+            "get": {
+                "tags": [
+                    "Forum Detail"
+                ],
+                "summary": "Forum Detail - Get By Forum ID",
+                "description": "Mengambil Data Forum Detail Berdasarkan Forum ID",
+                "operationId": "getFDbasedForumId",
+                "parameters": [
+                    {
+                        "name": "forumd",
+                        "in": "path",
+                        "description": "Masukan Forum ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "1"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Forum Detail",
+                                    "data": {
+                                        "id": 1,
+                                        "fd_forum_id": 3,
+                                        "fd_detail": "test lagi coba ya?",
+                                        "fd_user_id": 3,
+                                        "created_at": "2024-03-26T10:41:00.000000Z",
+                                        "updated_at": "2024-03-26T10:42:50.000000Z",
+                                        "forum_detail_user": {
+                                            "id": 3,
+                                            "nama": "Kiki"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/forumd/{user}/user": {
+            "get": {
+                "tags": [
+                    "Forum Detail"
+                ],
+                "summary": "Forum Detail - Get By User ID",
+                "description": "Mengambil Data Forum Detail Berdasarkan User ID",
+                "operationId": "getFDbasedUserId",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Masukan User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "1"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Forum Detail",
+                                    "data": {
+                                        "id": 1,
+                                        "fd_forum_id": 3,
+                                        "fd_detail": "test lagi coba ya?",
+                                        "fd_user_id": 3,
+                                        "created_at": "2024-03-26T10:41:00.000000Z",
+                                        "updated_at": "2024-03-26T10:42:50.000000Z",
+                                        "forum_detail_user": {
+                                            "id": 3,
+                                            "nama": "Kiki"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/forumq": {
+            "get": {
+                "tags": [
+                    "Forum Question"
+                ],
+                "summary": "Forum Question - Get All",
+                "description": "Mengambil Data Forum Question",
+                "operationId": "forumq-index",
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Forum Question",
+                                    "data": [
+                                        {
+                                            "id": 6,
+                                            "fq_question": "coba aja?",
+                                            "fq_group_id": 3,
+                                            "fq_created_by": 3,
+                                            "fq_updated_by": 5,
+                                            "created_at": "2024-03-26T06:58:15.000000Z",
+                                            "updated_at": "2024-03-26T07:07:04.000000Z",
+                                            "categories": [
+                                                {
+                                                    "id": 1,
+                                                    "c_nama": "Algoritma Pemrograman Komputer",
+                                                    "c_created_by": 1,
+                                                    "created_at": "2024-03-24T16:19:38.000000Z",
+                                                    "updated_at": "2024-03-24T16:24:05.000000Z",
+                                                    "pivot": {
+                                                        "fc_forum_id": 6,
+                                                        "fc_category_id": 1
+                                                    }
+                                                }
+                                            ],
+                                            "forum_user": {
+                                                "id": 3,
+                                                "nama": "Kiki"
+                                            },
+                                            "forum_user_update": {
+                                                "id": 5,
+                                                "nama": "Putin"
+                                            },
+                                            "forum_group": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Forum Question"
+                ],
+                "summary": "Forum Question - Insert",
+                "description": "Post data Forum Question",
+                "operationId": "forumq-store",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "fc_category_id": "[1,2]",
+                                "fq_question": "test?",
+                                "fq_group_id": 2,
+                                "fq_created_by": 2,
+                                "fq_updated_by": 2
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil disimpan"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/forumq/{forumq}": {
+            "get": {
+                "tags": [
+                    "Forum Question"
+                ],
+                "summary": "Forum Question - Get By ID",
+                "description": "Mengambil Data Forum Question Berdasarkan Forum Question ID",
+                "operationId": "forumq-show",
+                "parameters": [
+                    {
+                        "name": "forumq",
+                        "in": "path",
+                        "description": "Masukan Forum Question ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Forum Question",
+                                    "data": [
+                                        {
+                                            "id": 6,
+                                            "fq_question": "coba aja?",
+                                            "fq_group_id": 3,
+                                            "fq_created_by": 3,
+                                            "fq_updated_by": 5,
+                                            "created_at": "2024-03-26T06:58:15.000000Z",
+                                            "updated_at": "2024-03-26T07:07:04.000000Z",
+                                            "categories": [
+                                                {
+                                                    "id": 1,
+                                                    "c_nama": "Algoritma Pemrograman Komputer",
+                                                    "c_created_by": 1,
+                                                    "created_at": "2024-03-24T16:19:38.000000Z",
+                                                    "updated_at": "2024-03-24T16:24:05.000000Z",
+                                                    "pivot": {
+                                                        "fc_forum_id": 6,
+                                                        "fc_category_id": 1
+                                                    }
+                                                }
+                                            ],
+                                            "forum_user": {
+                                                "id": 3,
+                                                "nama": "Kiki"
+                                            },
+                                            "forum_user_update": {
+                                                "id": 5,
+                                                "nama": "Putin"
+                                            },
+                                            "forum_group": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "Forum Question"
+                ],
+                "summary": "Forum Question - Update",
+                "description": "Update data Forum Question",
+                "operationId": "forumq-update",
+                "parameters": [
+                    {
+                        "name": "forumq",
+                        "in": "path",
+                        "description": "Masukan Forum Question ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "1"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "fc_category_id": "[1,2]",
+                                "fq_question": "test ?",
+                                "fq_updated_by": 2
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil diubah"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Forum Question"
+                ],
+                "summary": "Forum Question - Delete",
+                "description": "Delete data Forum Question",
+                "operationId": "forumq-destroy",
+                "parameters": [
+                    {
+                        "name": "forumq",
+                        "in": "path",
+                        "description": "Masukan Forum Question ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "2"
+                        },
+                        "example": "2"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Data berhasil dihapus"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/forumq/{user}/user": {
+            "get": {
+                "tags": [
+                    "Forum Question"
+                ],
+                "summary": "Forum Question - Get By User ID",
+                "description": "Mengambil Data Forum Question Berdasarkan User ID",
+                "operationId": "getFQBasedUserId",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "Masukan User ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Forum Question",
+                                    "data": [
+                                        {
+                                            "id": 6,
+                                            "fq_question": "coba aja?",
+                                            "fq_group_id": 3,
+                                            "fq_created_by": 3,
+                                            "fq_updated_by": 5,
+                                            "created_at": "2024-03-26T06:58:15.000000Z",
+                                            "updated_at": "2024-03-26T07:07:04.000000Z",
+                                            "categories": [
+                                                {
+                                                    "id": 1,
+                                                    "c_nama": "Algoritma Pemrograman Komputer",
+                                                    "c_created_by": 1,
+                                                    "created_at": "2024-03-24T16:19:38.000000Z",
+                                                    "updated_at": "2024-03-24T16:24:05.000000Z",
+                                                    "pivot": {
+                                                        "fc_forum_id": 6,
+                                                        "fc_category_id": 1
+                                                    }
+                                                }
+                                            ],
+                                            "forum_user": {
+                                                "id": 3,
+                                                "nama": "Kiki"
+                                            },
+                                            "forum_user_update": {
+                                                "id": 5,
+                                                "nama": "Putin"
+                                            },
+                                            "forum_group": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/forumq/{group}/group": {
+            "get": {
+                "tags": [
+                    "Forum Question"
+                ],
+                "summary": "Forum Question - Get By Group ID",
+                "description": "Mengambil Data Forum Question Berdasarkan Group ID",
+                "operationId": "getFQBasedGroupId",
+                "parameters": [
+                    {
+                        "name": "group",
+                        "in": "path",
+                        "description": "Masukan Group ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "default": "3"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Forum Question",
+                                    "data": [
+                                        {
+                                            "id": 6,
+                                            "fq_question": "coba aja?",
+                                            "fq_group_id": 3,
+                                            "fq_created_by": 3,
+                                            "fq_updated_by": 5,
+                                            "created_at": "2024-03-26T06:58:15.000000Z",
+                                            "updated_at": "2024-03-26T07:07:04.000000Z",
+                                            "categories": [
+                                                {
+                                                    "id": 1,
+                                                    "c_nama": "Algoritma Pemrograman Komputer",
+                                                    "c_created_by": 1,
+                                                    "created_at": "2024-03-24T16:19:38.000000Z",
+                                                    "updated_at": "2024-03-24T16:24:05.000000Z",
+                                                    "pivot": {
+                                                        "fc_forum_id": 6,
+                                                        "fc_category_id": 1
+                                                    }
+                                                }
+                                            ],
+                                            "forum_user": {
+                                                "id": 3,
+                                                "nama": "Kiki"
+                                            },
+                                            "forum_user_update": {
+                                                "id": 5,
+                                                "nama": "Putin"
+                                            },
+                                            "forum_group": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/forumq/category": {
+            "post": {
+                "tags": [
+                    "Forum Question"
+                ],
+                "summary": "Forum Question - Get By Category ID",
+                "description": "Mengambil Data Forum Question Berdasarkan Group ID",
+                "operationId": "getFQBasedCategory",
+                "requestBody": {
+                    "description": "Request Body Description",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {},
+                            "example": {
+                                "fc_category_id": "[1,2]"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {},
+                                "example": {
+                                    "success": true,
+                                    "message": "Berhasil mengambil Data Forum Question",
+                                    "data": [
+                                        {
+                                            "id": 6,
+                                            "fq_question": "coba aja?",
+                                            "fq_group_id": 3,
+                                            "fq_created_by": 3,
+                                            "fq_updated_by": 5,
+                                            "created_at": "2024-03-26T06:58:15.000000Z",
+                                            "updated_at": "2024-03-26T07:07:04.000000Z",
+                                            "categories": [
+                                                {
+                                                    "id": 1,
+                                                    "c_nama": "Algoritma Pemrograman Komputer",
+                                                    "c_created_by": 1,
+                                                    "created_at": "2024-03-24T16:19:38.000000Z",
+                                                    "updated_at": "2024-03-24T16:24:05.000000Z",
+                                                    "pivot": {
+                                                        "fc_forum_id": 6,
+                                                        "fc_category_id": 1
+                                                    }
+                                                }
+                                            ],
+                                            "forum_user": {
+                                                "id": 3,
+                                                "nama": "Kiki"
+                                            },
+                                            "forum_user_update": {
+                                                "id": 5,
+                                                "nama": "Putin"
+                                            },
+                                            "forum_group": null
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/group": {
             "get": {
                 "tags": [

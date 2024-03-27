@@ -22,5 +22,8 @@ class ForumDetail extends Model
     {
         return $this->belongsTo(ForumQuestion::class, 'fd_forum_id');
     }
-
+    public function forum_detail_user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'fd_user_id');
+    }
 }
