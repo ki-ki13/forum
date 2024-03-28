@@ -1,6 +1,6 @@
 import './bootstrap';
 import { createApp } from "vue";
-import app from "./layouts/app.vue";
+import app from "./App.vue";
 import  router  from "./route";
 import vuetify from "./vuetify";
 
