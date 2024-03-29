@@ -81,8 +81,7 @@ class AuthController extends Controller
 		$message = "";
 
 		if ($result_update != null) {
-			$data = User::select('id','username', 'nama', 'role', 'api_token', 'token_type')
-				->where([
+			$data = User::where([
 					['username', '=', $username],
 					['password', '=', $password]
 				])->get();
@@ -185,4 +184,5 @@ class AuthController extends Controller
 			'data'    => $status  
 		], 201);
 	}
+
 }

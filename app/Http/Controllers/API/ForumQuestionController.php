@@ -80,13 +80,13 @@ class ForumQuestionController extends Controller
                     'categories',
                     'forum_user:id,nama',
                     'forum_user_update:id,nama',
-                    'forum_group:g_nama'
+                    'forum_group:id,g_nama'
                 ])->get();
             }
             return response()->json([
                 'message' => $message,
-                'data' => $data,
-                'success' => $success
+                'success' => $success,
+                'data' => $data
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -269,7 +269,7 @@ class ForumQuestionController extends Controller
                     'categories',
                     'forum_user:id,nama',
                     'forum_user_update:id,nama',
-                    'forum_group:g_nama'
+                    'forum_group:id,g_nama'
                 ])->where('id', $forumq)->first();
             }
             return response()->json([
@@ -725,6 +725,31 @@ class ForumQuestionController extends Controller
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Something went wrong in GroupController.store',
+                'error' => $e->getMessage(),
+                'success' => $success
+            ], 400);
+        }
+    }
+
+    public function getForumCount($userid){
+        try {
+            $token = request()->bearerToken();
+            $success = false;
+            $message = "Authorization Failed";
+            $data = null;
+            if ($this->checkToken($token)) {
+                $success = true;
+                $message = 'Data berhasil diambil';
+                $data = ForumQuestion::where('created_by',$userid)->count();
+            }
+            return response()->json([
+                'message' => $message,
+                'success' => $success,
+                'data'=>$data
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Something went wrong in GroupController.getForumCount',
                 'error' => $e->getMessage(),
                 'success' => $success
             ], 400);

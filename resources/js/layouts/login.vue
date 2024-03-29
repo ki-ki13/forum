@@ -113,11 +113,19 @@ import { ref, reactive } from "vue";
 import { useTheme } from "vuetify";
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import { useRouter } from "vue-router";
+import { useUserStore } from "../store/user-store";
+import {useThreadsStore} from "../store/threads-store"
+import {useCommentsStore} from "../store/comments-store"
 const url = import.meta.env.VITE_API_URL;
+const userStore = useUserStore();
+const threadsStore = useThreadsStore();
+const commentStore = useCommentsStore();
 
+const router = useRouter();
 const visible = ref(false);
 const btnColor = ref(undefined);
-const btnText = ref("dark theme");
+const btnText = ref("light");
 const alertSalah = ref(false);
 const alertSalahTitle = ref(false);
 const alertSalahPesan = ref(false);
@@ -128,11 +136,11 @@ function toggleTheme() {
     if (theme.global.current.value.dark) {
         theme.global.name.value = "light";
         btnColor.value = undefined;
-        btnText.value = "dark theme";
+        btnText.value = "dark";
     } else {
         theme.global.name.value = "dark";
         btnColor.value = "primary";
-        btnText.value = "light theme";
+        btnText.value = "light";
     }
 }
 const initialState = {
@@ -177,12 +185,17 @@ function login() {
             })
             .then((data) => {
                 if (data.success == false) {
-                    alertSalahTitle.value = 'Password atau Username salah';
-                    alertSalahPesan.value ="Silakan isi username dan password dengan benar 😊";
+                    alertSalahTitle.value = "Password atau Username salah";
+                    alertSalahPesan.value =
+                        "Silakan isi username dan password dengan benar 😊";
                     alertSalah.value = true;
                     // alert("username atau password salah");
                 }
-                console.log(data);
+                console.log(data.data);
+                userStore.setUserDetails(data.data[0]);
+                threadsStore.setThreads();
+                commentStore.setComments()
+                router.push("/threads");
             })
             .catch((error) => {
                 console.error("Error:", error);

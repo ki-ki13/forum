@@ -41,6 +41,7 @@ Route::apiResource('forumq', 'App\Http\Controllers\API\ForumQuestionController')
 Route::get('forumq/{user}/user', [ForumQuestionController::class, 'getFQBasedUserId']);
 Route::get('forumq/{group}/group', [ForumQuestionController::class, 'getFQBasedGroupId']);
 Route::post('forumq/category', [ForumQuestionController::class, 'getFQBasedCategory']);
+Route::get('forumq/{user}/count', [ForumQuestionController::class, 'getForumCount']);
 // Forum Question
 Route::apiResource('forumd', 'App\Http\Controllers\API\ForumDetailController');
 Route::get('forumd/{user}/user', [ForumDetailController::class, 'getFDbasedUserId']);

@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Threads from "./components/threads.vue";
+import Profile from "./components/profile.vue";
 import Login from "./layouts/login.vue";
 import Register from "./layouts/register.vue";
 import App from "./layouts/app.vue";
+import { useUserStore } from "./store/user-store";
 
 const routes = [
     {
@@ -13,6 +15,11 @@ const routes = [
                 path: "/threads",
                 name: "threads",
                 component: Threads,
+            },
+            {
+                path: "/profile",
+                name: "profile",
+                component: Profile,
             },
         ],
     },
@@ -25,4 +32,18 @@ const router = createRouter({
     routes,
 });
 
+router.beforeEach((to, from, next) => {
+    console.log(to.path)
+    const publicPages = ["/login", "/register"];
+    const authRequired = !publicPages.includes(to.path);
+    const api_token = useUserStore().api_token;
+    if (authRequired && !api_token ) {
+        next({ path: "/login" });
+    } else {
+        if(to.path ==="/"){
+            next({path:"/threads"})
+        }
+        next();
+    }
+});
 export default router;

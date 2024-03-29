@@ -144,7 +144,7 @@ class UserController extends Controller
                 $success = true;
                 $message = 'Data berhasil disimpan';
                 $token = $this->createToken();
-                $data = User::create(array_merge($request->all(), ['api_token' => $token,'token_type'=>'Bearer']));
+                $data = User::create(array_merge($request->all(), ['api_token' => $token, 'token_type' => 'Bearer']));
             }
             return response()->json([
                 'message' => $message,
@@ -297,12 +297,10 @@ class UserController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'username' => 'required',
                 'nama' => 'required',
                 'alamat' => 'required',
                 'no_telp' => 'required',
                 'jenis_kelamin' => 'required',
-                'role' => 'required'
             ]);
 
             //check if validation fails
@@ -318,11 +316,14 @@ class UserController extends Controller
             if ($this->checkToken($token)) {
                 $success = true;
                 $message = 'Data berhasil disimpan';
-                $result = User::where('id', $user)->update($request->all());
+                $user = User::where('id', $user);
+                $result = $user->update($request->all());
+                $data = $user->first();
             }
             return response()->json([
                 'message' => $message,
-                'success' => $success
+                'success' => $success,
+                'data'=>$data
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -399,7 +400,7 @@ class UserController extends Controller
         }
     }
 
-     /**
+    /**
      * Update the specified resource in storage.
      */
     /**
@@ -453,7 +454,7 @@ class UserController extends Controller
             if ($this->checkToken($token)) {
                 $success = true;
                 $message = 'Data berhasil disimpan';
-                $user= $request->username;
+                $user = $request->username;
                 $result = User::where('username', $user)->update(['group_id' => $request->group_id]);
             }
             return response()->json([

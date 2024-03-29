@@ -1,6 +1,6 @@
 <template>
     <v-layout class="rounded rounded-md">
-        <v-app-bar :elevation="0" v-if="$route.path != '/login'">
+        <v-app-bar :elevation="0">
             <template v-slot:prepend>
                 <v-app-bar-nav-icon
                     variant="text"
@@ -32,7 +32,7 @@
 
                     <v-list>
                         <div class="mx-auto text-center pa-3">
-                            <v-avatar color="primary" size="large">
+                            <v-avatar color="primary" size="small">
                                 <span class="text-subtitle-2">{{
                                     user.initials
                                 }}</span>
@@ -44,6 +44,7 @@
                                 v-for="(item, i) in actionNavbar"
                                 :key="i"
                                 :value="item"
+                                @click="handleClick(item)"
                             >
                                 <template v-slot:prepend>
                                     <v-icon :icon="item.icon"></v-icon>
@@ -58,7 +59,7 @@
             </template>
         </v-app-bar>
 
-        <v-navigation-drawer class="pa-2" permanent v-model="drawer" v-if="$route.path != '/login'">
+        <v-navigation-drawer class="pa-2" permanent v-model="drawer">
             <v-list>
                 <v-list-item
                     v-for="(item, i) in menu"
@@ -90,17 +91,30 @@
 <script setup>
 import { ref } from "vue";
 import { useTheme } from "vuetify";
+import { useUserStore } from "../store/user-store";
+import { useThreadsStore } from "../store/threads-store";
+import { useCommentsStore } from "../store/comments-store";
+import { useRouter } from "vue-router";
+const router = useRouter();
+const userStore = useUserStore();
+const threadsStore = useThreadsStore();
+const commentsStore = useCommentsStore();
 const btnColor = ref(undefined);
-const btnText = ref("dark theme");
+const btnText = ref("light");
 const drawer = ref(true);
 const actionNavbar = [
-    { text: "Profile", icon: "mdi-account-circle" },
-    { text: "Logout", icon: "mdi-logout" },
+    {
+        text: "Profile",
+        icon: "mdi-account-circle",
+        action: "to-profile",
+    },
+    { text: "Logout", icon: "mdi-logout", action: "logout" },
 ];
+
 const user = {
-    name: "Kiki",
-    initials: "QQ",
-    email: "rizkimah@gmail.com",
+    name: userStore.nama,
+    initials: abbreviate(userStore.nama),
+    email: userStore.username,
 };
 
 const menu = [
@@ -115,11 +129,30 @@ function toggleTheme() {
     if (theme.global.current.value.dark) {
         theme.global.name.value = "light";
         btnColor.value = undefined;
-        btnText.value = "dark theme";
+        btnText.value = "dark";
     } else {
         theme.global.name.value = "dark";
         btnColor.value = "primary";
-        btnText.value = "light theme";
+        btnText.value = "light";
     }
+}
+
+function abbreviate(word) {
+    return word.charAt(0) + ".";
+}
+
+function handleClick(item) {
+    if (item.action === "logout") {
+        logout();
+    } else if (item.action === "to-profile") {
+        router.push("/profile");
+    }
+}
+
+function logout() {
+    userStore.clearUser();
+    threadsStore.clearThreads();
+    commentsStore.clearComments();
+    router.push("/login");
 }
 </script>
