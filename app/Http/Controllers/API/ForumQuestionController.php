@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\ForumDetail;
 use App\Models\ForumQuestion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -81,7 +82,7 @@ class ForumQuestionController extends Controller
                     'forum_user:id,nama',
                     'forum_user_update:id,nama',
                     'forum_group:id,g_nama'
-                ])->get();
+                ])->withCount('forum_detail')->get();
             }
             return response()->json([
                 'message' => $message,
@@ -269,7 +270,9 @@ class ForumQuestionController extends Controller
                     'categories',
                     'forum_user:id,nama',
                     'forum_user_update:id,nama',
-                    'forum_group:id,g_nama'
+                    'forum_group:id,g_nama',
+                    'forum_detail',
+                    'forum_detail.forum_detail_user:id,nama'
                 ])->where('id', $forumq)->first();
             }
             return response()->json([
@@ -521,7 +524,7 @@ class ForumQuestionController extends Controller
                     'forum_user:id,nama',
                     'forum_user_update:id,nama',
                     'forum_group:id,g_nama'
-                ])->where('fq_created_by', '=', $userid)->get();
+                ])->where('fq_created_by', '=', $userid)->withCount('forum_detail')->get();
             }
             return response()->json([
                 'message' => $message,

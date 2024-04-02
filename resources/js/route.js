@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Threads from "./components/threads.vue";
+import Onethreads from "./components/onethread.vue";
+import Mythreads from "./components/mythreads.vue";
 import Profile from "./components/profile.vue";
 import Login from "./layouts/login.vue";
 import Register from "./layouts/register.vue";
@@ -15,6 +17,16 @@ const routes = [
                 path: "/threads",
                 name: "threads",
                 component: Threads,
+            },
+            {
+                path: "/thread/:id",
+                name: "onethreads",
+                component: Onethreads,
+            },
+            {
+                path: "/mythreads",
+                name: "mythreads",
+                component: Mythreads,
             },
             {
                 path: "/profile",

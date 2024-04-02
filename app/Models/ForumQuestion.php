@@ -23,7 +23,7 @@ class ForumQuestion extends Model
 
     public function forum_detail(): HasMany
     {
-        return $this->hasMany(ForumDetail::class);
+        return $this->hasMany(ForumDetail::class, 'fd_forum_id');
     }
     public function forum_group(): BelongsTo
     {

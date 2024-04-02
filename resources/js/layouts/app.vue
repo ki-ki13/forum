@@ -79,7 +79,7 @@
         </v-navigation-drawer>
 
         <v-main>
-            <div style="min-height: 100dvh" class="main-content pa-4 d-flex">
+            <div style="min-height: 100dvh" class="main-content pa-4 d-flex" id="app-background">
                 <router-view></router-view>
             </div>
             <v-footer>

@@ -1,34 +1,21 @@
 <template>
     <v-container>
-        <v-row class="mb-4">
-            <div class="d-flex justify-content-between w-100">
-                <v-btn
-                    variant="elevated"
-                    class="rounded"
-                    color="primary"
-                    @click="showAddModal = true"
-                    >Add Forum Question
-                </v-btn>
-                <v-spacer></v-spacer>
-                    <v-text-field
-                        v-model="search"
-                        density="compact"
-                        label="Search for forum question"
-                        prepend-inner-icon="mdi-magnify"
-                        variant="outlined"
-                        flat
-                        hide-details
-                        single-line
-                    ></v-text-field>
-            </div>
-        </v-row>
         <v-row align="center" justify="center">
-            <v-hover
-                v-slot="{ isHovering, props }"
-                v-for="item in filteredItems"
-            >
+            <div class="d-flex justify-content-between w-100 mb-4">
+                <v-text-field
+                    v-model="search"
+                    density="compact"
+                    label="Search for forum question"
+                    prepend-inner-icon="mdi-magnify"
+                    variant="solo-filled"
+                    flat
+                    hide-details
+                    single-line
+                ></v-text-field>
+            </div>
+            <v-hover v-slot="{ isHovering, props }" v-for="item in filteredItems">
                 <v-card
-                    :to="'/thread/' + item.id"
+                    :to="'/thread/'+ item.id"
                     :variant="isHovering ? 'tonal' : 'elevated'"
                     class="mx-auto rounded-lg mb-3"
                     width="100%"
@@ -49,7 +36,7 @@
                                 <div class="text-subtitle">
                                     {{ item.forum_user.nama }}
                                 </div>
-
+                                
                                 <div class="text-h6 mb-1">
                                     {{ item.fq_question }}
                                 </div>
@@ -104,38 +91,23 @@
             </v-hover>
         </v-row>
     </v-container>
-    <AddThread
-        :showModal="showAddModal"
-        @close="showAddModal = false"
-        :group="groups"
-        :category="categories"
-        :store="userStore"
-        :onUpdate="getData"
-    />
 </template>
 <script setup>
 import { onMounted, ref, watch } from "vue";
 import { useUserStore } from "../store/user-store";
 import { format } from "date-fns";
-import AddThread from "../components/subcomponent/add-thread.vue";
 // import { useRoute, useRouter } from "vue-router";
 
 const userStore = useUserStore();
 const url = import.meta.env.VITE_API_URL;
-const showAddModal = ref(false);
 
 let items = ref([]);
 let filteredItems = ref([]);
 let search = ref("");
 
-let groups = ref([]);
-let categories = ref([]);
-
 function getData() {
     try {
-        items.value = [];
-        filteredItems.value = [];
-        fetch(`${url}/forumq`, {
+        fetch(`${url}/forumq/${userStore.id}/user`, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
@@ -161,64 +133,6 @@ function getData() {
     }
 }
 
-function getGroup() {
-    try {
-        fetch(`${url}/group`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userStore.api_token}`,
-            },
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                for (const i of data.data) groups.value.push(i);
-                groups.value.push({
-                    id: "",
-                    g_nama: "General",
-                });
-                console.log(groups.value);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    } catch (error) {
-        console.log(error);
-    }
-}
-
-function getCategory() {
-    try {
-        fetch(`${url}/category`, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${userStore.api_token}`,
-            },
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error("Network response was not ok");
-                }
-                return response.json();
-            })
-            .then((data) => {
-                for (const i of data.data) categories.value.push(i);
-                console.log(categories.value);
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
-    } catch (error) {
-        console.log(error);
-    }
-}
-
 const formatCreatedAt = (timestamp) => {
     return format(new Date(timestamp), "dd MMM yyyy HH:mm:ss");
 };
@@ -235,7 +149,5 @@ watch(search, (newValue, oldValue) => {
 
 onMounted(() => {
     getData();
-    getGroup();
-    getCategory();
 });
 </script>
