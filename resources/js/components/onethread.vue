@@ -68,6 +68,36 @@
                                     }}</span
                                 >
                             </div>
+                            <v-menu>
+                                <template v-slot:activator="{ props }">
+                                    <v-btn
+                                        icon="mdi-dots-horizontal"
+                                        flat
+                                        density="compact"
+                                        v-bind="props"
+                                    ></v-btn>
+                                </template>
+
+                                <v-list>
+                                    <v-list-item
+                                        v-for="(item, i) in cardAction"
+                                        :key="i"
+                                        :value="item"
+                                        @click="
+                                            handleAction(
+                                                item,
+                                                'card-utama',
+                                                question.id
+                                            )
+                                        "
+                                    >
+                                        <v-list-item-title
+                                            :class="'text-' + item.color"
+                                            >{{ item.title }}</v-list-item-title
+                                        >
+                                    </v-list-item>
+                                </v-list>
+                            </v-menu>
                         </div>
                     </div>
                 </v-card-item>
@@ -116,6 +146,36 @@
                                     {{ formatCreatedAt(item.updated_at) }}</span
                                 >
                             </div>
+                            <v-menu>
+                                <template v-slot:activator="{ props }">
+                                    <v-btn
+                                        icon="mdi-dots-horizontal"
+                                        flat
+                                        density="compact"
+                                        v-bind="props"
+                                    ></v-btn>
+                                </template>
+
+                                <v-list>
+                                    <v-list-item
+                                        v-for="(ca, i) in cardAction"
+                                        :key="i"
+                                        :value="ca"
+                                        @click="
+                                            handleAction(
+                                                ca,
+                                                'card-reply',
+                                                item.id
+                                            )
+                                        "
+                                    >
+                                        <v-list-item-title
+                                            :class="'text-' + ca.color"
+                                            >{{ ca.title }}</v-list-item-title
+                                        >
+                                    </v-list-item>
+                                </v-list>
+                            </v-menu>
                         </div>
                     </div>
                 </v-card-item>
@@ -139,20 +199,42 @@
             </div>
         </v-row>
     </v-container>
+
+    <!-- dialogs -->
+    <v-dialog v-model="deleteDialog" width="auto">
+        <v-card
+            max-width="400"
+            text="Are you sure want to delete the data?"
+            title="Delete confirmation"
+        >
+            <template v-slot:actions>
+                <v-btn text="Close" @click="deleteDialog = false"></v-btn>
+                <v-btn
+                    class="ms-auto"
+                    text="Yes"
+                    color="red"
+                    @click="handleDelete"
+                ></v-btn>
+            </template>
+        </v-card>
+    </v-dialog>
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
 import { useUserStore } from "../store/user-store";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import { format } from "date-fns";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 let reply = ref([]);
 let question = ref({});
 const route = useRoute();
+const router = useRouter();
 const userStore = useUserStore();
 const url = import.meta.env.VITE_API_URL;
-const quill = ref(null)
+const quill = ref(null);
+
+let deleteDialog = ref(false);
 
 let fd_detail = ref("");
 const toolbarOptions = [
@@ -176,6 +258,7 @@ const toolbarOptions = [
 function getData() {
     try {
         question.value = [];
+        reply.value = []
         fetch(`${url}/forumq/${route.params.id}`, {
             method: "GET",
             headers: {
@@ -227,7 +310,87 @@ function addReply() {
             .then((data) => {
                 console.log(data);
                 getData();
-                quill.value.setText('')
+                quill.value.setText("");
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+const cardAction = [
+    { title: "Update", color: undefined, action: "edit" },
+    { title: "Delete", color: "red", action: "handleDelete" },
+];
+
+let deleteId = ref(null);
+let elementType = ref(null);
+function handleAction(item, elementid, dataid) {
+    console.log(item.action, elementid, dataid);
+    if (item.action == "handleDelete") {
+        deleteDialog.value = true;
+        deleteId.value = dataid;
+        elementType.value = elementid;
+    }
+}
+
+function handleDelete() {
+    if (elementType.value === "card-utama") {
+        deleteForum();
+    } else {
+        deleteReply();
+    }
+}
+
+function deleteReply() {
+    try {
+        fetch(`${url}/forumd/${deleteId.value}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userStore.api_token}`,
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                getData();
+                deleteDialog.value = false;
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function deleteForum() {
+    try {
+        fetch(`${url}/forumq/${deleteId.value}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userStore.api_token}`,
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log(data);
+                deleteDialog.value = false;
+                router.back();
             })
             .catch((error) => {
                 console.error("Error:", error);
