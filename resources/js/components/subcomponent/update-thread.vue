@@ -3,7 +3,7 @@
         <v-dialog v-model="dialogVisible" max-width="400">
             <v-card>
                 <v-card-title class="text-h6 text-primary">
-                    Add Question
+                    Update Question
                 </v-card-title>
                 <v-card-text>
                     <v-row dense>
@@ -73,24 +73,32 @@ const props = defineProps({
     group: Object,
     onUpdate: Function,
     store: Object,
+    data: Object,
 });
 const emit = defineEmits(["close"]);
 const dialogVisible = ref(props.showModal);
 
 const itemModel = {
-    question: "",
-    category: [1],
-    group: "",
+    question: props.data.fq_question,
+    category: props.data.category,
+    group: props.data.group ? props.data.group : "",
 };
 
 const state = reactive({
     ...itemModel,
 });
 
+const updateStateFromProps = () => {
+    state.question = props.data.fq_question;
+    state.category = props.data.category || [1];
+    state.group = props.data.group || "";
+};
+
 watch(
     () => props.showModal,
     (newValue) => {
         dialogVisible.value = newValue;
+        updateStateFromProps();
     }
 );
 
@@ -105,8 +113,8 @@ const url = import.meta.env.VITE_API_URL;
 
 function update() {
     try {
-        fetch(`${url}/forumq`, {
-            method: "POST",
+        fetch(`${url}/forumq/${props.data.id}`, {
+            method: "PUT",
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${props.store.api_token}`,

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->text('fq_question');
             $table->unsignedBigInteger('fq_created_by');
             $table->unsignedBigInteger('fq_updated_by');
+            $table->unsignedBigInteger('fq_group_id');
             $table->timestamps();
         });
     }

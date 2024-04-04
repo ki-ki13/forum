@@ -30,13 +30,13 @@
                             <div class="text-h6 mb-1">
                                 {{ question.fq_question }}
                             </div>
-                            <div class="text-overline">
+                            <!-- <div class="text-overline">
                                 {{
                                     question.fq_group_id
                                         ? question.forum_group.g_nama
                                         : "general"
                                 }}
-                            </div>
+                            </div> -->
                         </div>
                         <div
                             class="w-100 keterangan d-flex flex-column align-end"
@@ -218,6 +218,17 @@
             </template>
         </v-card>
     </v-dialog>
+
+    <EditThread
+        v-if="dataItem"
+        :showModal="editDialog"
+        @close="editDialog = false"
+        :group="groups"
+        :category="categories"
+        :store="userStore"
+        :data="dataItem"
+        :onUpdate="getData"
+    />
 </template>
 <script setup>
 import { onMounted, ref } from "vue";
@@ -226,6 +237,8 @@ import { useRoute, useRouter } from "vue-router";
 import { format } from "date-fns";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
+import EditThread from "../components/subcomponent/update-thread.vue";
+
 let reply = ref([]);
 let question = ref({});
 const route = useRoute();
@@ -235,6 +248,7 @@ const url = import.meta.env.VITE_API_URL;
 const quill = ref(null);
 
 let deleteDialog = ref(false);
+let editDialog = ref(false);
 
 let fd_detail = ref("");
 const toolbarOptions = [
@@ -258,7 +272,7 @@ const toolbarOptions = [
 function getData() {
     try {
         question.value = [];
-        reply.value = []
+        reply.value = [];
         fetch(`${url}/forumq/${route.params.id}`, {
             method: "GET",
             headers: {
@@ -325,14 +339,90 @@ const cardAction = [
     { title: "Delete", color: "red", action: "handleDelete" },
 ];
 
+function getGroup() {
+    try {
+        fetch(`${url}/group`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userStore.api_token}`,
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                for (const i of data.data) groups.value.push(i);
+                groups.value.push({
+                    id: "",
+                    g_nama: "General",
+                });
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+function getCategory() {
+    try {
+        fetch(`${url}/category`, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${userStore.api_token}`,
+            },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+                return response.json();
+            })
+            .then((data) => {
+                categories.value = data.data;
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 let deleteId = ref(null);
 let elementType = ref(null);
+let groups = ref([]);
+let categories = ref([]);
+let dataItem = ref([]);
+
 function handleAction(item, elementid, dataid) {
-    console.log(item.action, elementid, dataid);
     if (item.action == "handleDelete") {
         deleteDialog.value = true;
         deleteId.value = dataid;
         elementType.value = elementid;
+    } else {
+        if (elementid == "card-utama") {
+            const categoryIds = [];
+            for (const category of question.value.categories) {
+                categoryIds.push(category.id);
+            }
+            const newData = [];
+            newData.push({
+                id: question.value.id,
+                fq_question: question.value.fq_question,
+                group: question.value.fq_group_id,
+                category: categoryIds,
+            });
+            dataItem.value = newData[0];
+            editDialog.value = true;
+        }
+        console.log(dataItem.value);
     }
 }
 
@@ -410,5 +500,7 @@ function abbreviate(word) {
 
 onMounted(() => {
     getData();
+    getGroup();
+    getCategory();
 });
 </script>

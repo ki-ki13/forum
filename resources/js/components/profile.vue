@@ -77,11 +77,11 @@
                                 <span class="px-2 py-1 text-white font-weight-bold">My Comments</span>
                                 <span>{{commentStore.commentsCount}}</span>
                             </div>
-                            <v-divider vertical :thickness="2" class="border-opacity-50"/>
+                            <!-- <v-divider vertical :thickness="2" class="border-opacity-50"/>
                             <div class="d-flex flex-column align-center">
                                 <span class="px-2 py-1 text-white font-weight-bold">My Groups</span>
                                 <span class="text-blue-grey-lighten-2">comming soon</span>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </v-card>

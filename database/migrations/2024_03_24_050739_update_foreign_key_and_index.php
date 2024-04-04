@@ -23,7 +23,7 @@ return new class extends Migration
         });
 
         Schema::table('tbl_group', function (Blueprint $table) {
-            $table->foreign('g_created_by')->references('id')->on('tbl_users');
+            $table->foreign('g_created_by')->references('id')->on('tbl_users')->onDelete('cascade');
             $table->index('g_created_by');
         });
 

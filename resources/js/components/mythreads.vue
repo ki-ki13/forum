@@ -40,13 +40,13 @@
                                 <div class="text-h6 mb-1">
                                     {{ item.fq_question }}
                                 </div>
-                                <div class="text-overline">
+                                <!-- <div class="text-overline">
                                     {{
                                         item.fq_group_id
                                             ? item.forum_group.g_nama
                                             : "general"
                                     }}
-                                </div>
+                                </div> -->
                             </div>
                             <div
                                 class="w-100 keterangan d-flex flex-column align-end"

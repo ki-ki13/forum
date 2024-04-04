@@ -115,12 +115,8 @@ import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import { useRouter } from "vue-router";
 import { useUserStore } from "../store/user-store";
-import {useThreadsStore} from "../store/threads-store"
-import {useCommentsStore} from "../store/comments-store"
 const url = import.meta.env.VITE_API_URL;
 const userStore = useUserStore();
-const threadsStore = useThreadsStore();
-const commentStore = useCommentsStore();
 
 const router = useRouter();
 const visible = ref(false);
@@ -193,8 +189,7 @@ function login() {
                 }
                 console.log(data.data);
                 userStore.setUserDetails(data.data[0]);
-                threadsStore.setThreads();
-                commentStore.setComments()
+                
                 router.push("/threads");
             })
             .catch((error) => {

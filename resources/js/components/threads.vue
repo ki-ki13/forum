@@ -53,13 +53,13 @@
                                 <div class="text-h6 mb-1">
                                     {{ item.fq_question }}
                                 </div>
-                                <div class="text-overline">
+                                <!-- <div class="text-overline">
                                     {{
                                         item.fq_group_id
                                             ? item.forum_group.g_nama
                                             : "general"
                                     }}
-                                </div>
+                                </div> -->
                             </div>
                             <div
                                 class="w-100 keterangan d-flex flex-column align-end"
@@ -118,7 +118,12 @@ import { onMounted, ref, watch } from "vue";
 import { useUserStore } from "../store/user-store";
 import { format } from "date-fns";
 import AddThread from "../components/subcomponent/add-thread.vue";
+import {useThreadsStore} from "../store/threads-store"
+import {useCommentsStore} from "../store/comments-store"
 // import { useRoute, useRouter } from "vue-router";
+
+const threadsStore = useThreadsStore();
+const commentStore = useCommentsStore();
 
 const userStore = useUserStore();
 const url = import.meta.env.VITE_API_URL;
@@ -151,6 +156,8 @@ function getData() {
             .then((data) => {
                 for (const i of data.data) items.value.push(i);
                 filteredItems.value = items.value;
+                threadsStore.setThreads();
+                commentStore.setComments()
                 console.log(items.value);
             })
             .catch((error) => {

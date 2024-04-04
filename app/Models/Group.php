@@ -14,7 +14,8 @@ class Group extends Model
         'id',
         'g_nama',
         'g_tipe',
-        'g_status'
+        'g_status',
+        'g_created_by'
     ];
 
     public function user(): HasMany

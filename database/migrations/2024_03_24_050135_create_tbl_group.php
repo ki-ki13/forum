@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('g_nama');
             $table->string('g_tipe');
             $table->string('g_status');
-            $table->bigInteger('g_created_by');
+            $table->unsignedBigInteger('g_created_by');
             $table->timestamps();
         });
     }
