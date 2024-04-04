@@ -68,7 +68,7 @@
                                     }}</span
                                 >
                             </div>
-                            <v-menu>
+                            <v-menu v-if="userStore.id == question.fq_created_by">
                                 <template v-slot:activator="{ props }">
                                     <v-btn
                                         icon="mdi-dots-horizontal"
@@ -146,7 +146,7 @@
                                     {{ formatCreatedAt(item.updated_at) }}</span
                                 >
                             </div>
-                            <v-menu>
+                            <v-menu v-if="userStore.id == item.fd_user_id">
                                 <template v-slot:activator="{ props }">
                                     <v-btn
                                         icon="mdi-dots-horizontal"
@@ -220,11 +220,18 @@
     </v-dialog>
 
     <EditThread
-        v-if="dataItem"
         :showModal="editDialog"
         @close="editDialog = false"
         :group="groups"
         :category="categories"
+        :store="userStore"
+        :data="dataItem"
+        :onUpdate="getData"
+    />
+
+    <EditReply
+        :showModal="replyDialog"
+        @close="replyDialog = false"
         :store="userStore"
         :data="dataItem"
         :onUpdate="getData"
@@ -238,6 +245,7 @@ import { format } from "date-fns";
 import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import EditThread from "../components/subcomponent/update-thread.vue";
+import EditReply from "../components/subcomponent/update-reply.vue";
 
 let reply = ref([]);
 let question = ref({});
@@ -249,6 +257,7 @@ const quill = ref(null);
 
 let deleteDialog = ref(false);
 let editDialog = ref(false);
+let replyDialog = ref(false)
 
 let fd_detail = ref("");
 const toolbarOptions = [
@@ -421,8 +430,16 @@ function handleAction(item, elementid, dataid) {
             });
             dataItem.value = newData[0];
             editDialog.value = true;
+        }else{
+            const newData = [];
+            newData.push({
+                id: dataid,
+                fd_forum_id:question.value.id,
+                fd_detail: reply.value.filter(rep => rep.id == dataid)[0]?.fd_detail,
+            });
+            dataItem.value = newData[0];
+            replyDialog.value = true
         }
-        console.log(dataItem.value);
     }
 }
 
