@@ -40,7 +40,7 @@ const routes = [
 ];
 
 const router = createRouter({
-    history: createWebHistory("/forum"),
+    history: createWebHistory("/app_forum"),
     routes,
 });
 
