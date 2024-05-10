@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Threads from "./components/threads.vue";
 import Onethreads from "./components/onethread.vue";
+import Mapel from "./components/mapel.vue";
 import Mythreads from "./components/mythreads.vue";
 import Profile from "./components/profile.vue";
 import Login from "./layouts/login.vue";
@@ -32,6 +33,11 @@ const routes = [
                 path: "/profile",
                 name: "profile",
                 component: Profile,
+            },
+            {
+                path: "/mapel",
+                name: "Mapel",
+                component: Mapel,
             },
         ],
     },

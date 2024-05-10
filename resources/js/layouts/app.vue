@@ -120,7 +120,7 @@ const user = {
 const menu = [
     { text: "Threads", icon: "mdi-forum", link: "/threads" },
     { text: "My threads", icon: "mdi-message", link: "/mythreads" },
-    // { text: "Group", icon: "mdi-account-multiple", link: "/group" },
+    { text: "Mata Pelajaran", icon: "mdi-book", link: "/mapel" },
 ];
 
 const theme = useTheme();
