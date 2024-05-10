@@ -14,7 +14,7 @@
                         </div>
                         <div class="content w-100">
                             <div
-                                class="atas w-100 d-flex justify-space-between"
+                                class="atas w-100 d-flex justify-space-between flex-sm-row flex-column"
                             >
                                 <v-card-title class="text-h5">
                                     {{ userStore.nama }}

@@ -20,8 +20,8 @@
   
   let items = ref([]);
   const headers = [
-    { text: "ID", value: "id" },
-    { text: "Nama", value: "name" }
+    { title: "No", value: "id" },
+    { title: "Nama", value: "name" }
   ];
   
   function getData() {

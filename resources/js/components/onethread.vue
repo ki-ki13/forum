@@ -17,87 +17,96 @@
                                 </span>
                             </v-avatar>
                         </div>
-
-                        <div class="text ml-3 w-100">
-                            <div class="text-subtitle">
-                                {{
-                                    question.forum_user
-                                        ? question.forum_user.nama
-                                        : "undefined"
-                                }}
-                            </div>
-
-                            <div class="text-h6 mb-1">
-                                {{ question.fq_question }}
-                            </div>
-                            <!-- <div class="text-overline">
-                                {{
-                                    question.fq_group_id
-                                        ? question.forum_group.g_nama
-                                        : "general"
-                                }}
-                            </div> -->
-                        </div>
                         <div
                             class="w-100 keterangan d-flex flex-column align-end"
                         >
-                            <div class="d-flex mb-4">
-                                <div
-                                    class="chip-wrapper"
-                                    v-for="cat in question.categories"
-                                >
-                                    <v-chip
-                                        class="ma-2 w-auto rounded-xl"
-                                        color="primary"
-                                        label
-                                    >
-                                        <small>{{ cat.c_nama }}</small>
-                                    </v-chip>
-                                </div>
-                            </div>
-
-                            <div class="sub-keterangan d-flex">
-                                <span class="text-caption"
-                                    >Created at :
+                            <div class="text ml-3 w-100">
+                                <div class="text-subtitle">
                                     {{
-                                        question.created_at
-                                            ? formatCreatedAt(
-                                                  question.created_at
-                                              )
-                                            : ""
-                                    }}</span
-                                >
-                            </div>
-                            <v-menu v-if="userStore.id == question.fq_created_by">
-                                <template v-slot:activator="{ props }">
-                                    <v-btn
-                                        icon="mdi-dots-horizontal"
-                                        flat
-                                        density="compact"
-                                        v-bind="props"
-                                    ></v-btn>
-                                </template>
+                                        question.forum_user
+                                            ? question.forum_user.nama
+                                            : "undefined"
+                                    }}
+                                </div>
 
-                                <v-list>
-                                    <v-list-item
-                                        v-for="(item, i) in cardAction"
-                                        :key="i"
-                                        :value="item"
-                                        @click="
-                                            handleAction(
-                                                item,
-                                                'card-utama',
-                                                question.id
-                                            )
-                                        "
+                                <div class="text-h6 mb-1">
+                                    {{ question.fq_question }}
+                                </div>
+                                <!-- <div class="text-overline">
+                                    {{
+                                        question.fq_group_id
+                                            ? question.forum_group.g_nama
+                                            : "general"
+                                    }}
+                                </div> -->
+                            </div>
+                            <div
+                                class="w-100 keterangan d-flex flex-column align-end"
+                            >
+                                <div class="d-flex mb-4">
+                                    <div
+                                        class="chip-wrapper"
+                                        v-for="cat in question.categories"
                                     >
-                                        <v-list-item-title
-                                            :class="'text-' + item.color"
-                                            >{{ item.title }}</v-list-item-title
+                                        <v-chip
+                                            class="ma-2 w-auto rounded-xl"
+                                            color="primary"
+                                            label
                                         >
-                                    </v-list-item>
-                                </v-list>
-                            </v-menu>
+                                            <small>{{ cat.c_nama }}</small>
+                                        </v-chip>
+                                    </div>
+                                </div>
+
+                                <div class="sub-keterangan d-flex">
+                                    <span class="text-caption"
+                                        >Created at :
+                                        {{
+                                            question.created_at
+                                                ? formatCreatedAt(
+                                                      question.created_at
+                                                  )
+                                                : ""
+                                        }}</span
+                                    >
+                                </div>
+                                <v-menu
+                                    v-if="
+                                        userStore.id == question.fq_created_by
+                                    "
+                                >
+                                    <template v-slot:activator="{ props }">
+                                        <v-btn
+                                            icon="mdi-dots-horizontal"
+                                            flat
+                                            density="compact"
+                                            v-bind="props"
+                                        ></v-btn>
+                                    </template>
+
+                                    <v-list>
+                                        <v-list-item
+                                            v-for="(item, i) in cardAction"
+                                            :key="i"
+                                            :value="item"
+                                            @click="
+                                                handleAction(
+                                                    item,
+                                                    'card-utama',
+                                                    question.id
+                                                )
+                                            "
+                                        >
+                                            <v-list-item-title
+                                                :class="'text-' + item.color"
+                                                >{{
+                                                    item.title
+                                                }}</v-list-item-title
+                                            >
+                                        </v-list-item>
+                                    </v-list>
+                                </v-menu>
+                            </div>
                         </div>
                     </div>
                 </v-card-item>
@@ -257,7 +266,7 @@ const quill = ref(null);
 
 let deleteDialog = ref(false);
 let editDialog = ref(false);
-let replyDialog = ref(false)
+let replyDialog = ref(false);
 
 let fd_detail = ref("");
 const toolbarOptions = [
@@ -430,15 +439,16 @@ function handleAction(item, elementid, dataid) {
             });
             dataItem.value = newData[0];
             editDialog.value = true;
-        }else{
+        } else {
             const newData = [];
             newData.push({
                 id: dataid,
-                fd_forum_id:question.value.id,
-                fd_detail: reply.value.filter(rep => rep.id == dataid)[0]?.fd_detail,
+                fd_forum_id: question.value.id,
+                fd_detail: reply.value.filter((rep) => rep.id == dataid)[0]
+                    ?.fd_detail,
             });
             dataItem.value = newData[0];
-            replyDialog.value = true
+            replyDialog.value = true;
         }
     }
 }
