@@ -8,7 +8,7 @@
                 ></v-app-bar-nav-icon>
             </template>
 
-            <v-app-bar-title><h3>Forum App</h3></v-app-bar-title>
+            <v-app-bar-title><h3>Smart Insight</h3></v-app-bar-title>
 
             <template v-slot:append>
                 <v-btn

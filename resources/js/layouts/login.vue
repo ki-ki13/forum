@@ -1,7 +1,7 @@
 <template>
     <v-layout class="rounded rounded-md">
         <v-app-bar :elevation="0">
-            <v-app-bar-title><h3>Forum App</h3></v-app-bar-title>
+            <v-app-bar-title><h3>Smart Insight</h3></v-app-bar-title>
 
             <template v-slot:append>
                 <v-btn
